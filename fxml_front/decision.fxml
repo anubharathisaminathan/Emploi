@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="571.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.spd.firstController">
+   <children>
+      <ImageView fitHeight="380.0" fitWidth="571.0" layoutX="-1.0" layoutY="-1.0">
+         <image>
+            <Image url="@resumebgnew.png" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="58.0" layoutY="205.0" prefHeight="163.0" prefWidth="230.0" style="-fx-background-color: #2C3333; -fx-background-radius: 20;">
+         <children>
+            <Button fx:id="buildResume" layoutX="53.0" layoutY="31.0" mnemonicParsing="false" onAction="#buildResumeOnAction" prefHeight="25.0" prefWidth="124.0" text="Build a resume">
+               <font>
+                  <Font name="Tahoma Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="jobPortal" layoutX="63.0" layoutY="71.0" mnemonicParsing="false" onAction="#jobPortalOnAction" prefHeight="25.0" prefWidth="105.0" text="Job portal">
+               <font>
+                  <Font name="Tahoma Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="resumeMatcher" layoutX="54.0" layoutY="111.0" mnemonicParsing="false" onAction="#resumeMatcherOnAction" prefHeight="25.0" prefWidth="124.0" text="Resume matcher">
+               <font>
+                  <Font name="Tahoma Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <Label layoutX="14.0" layoutY="78.0" prefHeight="127.0" prefWidth="353.0" text="Here's your one stop destination for your bright future. Our team is here to help you come up with a professional resume and suggest companies based on your skill set. Here you can show interest towards a company suggested for you. So that the company gets to know about your profile and walk in for interview." textFill="#544e4e" wrapText="true">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="32.0" layoutY="23.0" text="Hello peeps!!!" textFill="#434242">
+         <font>
+            <Font name="Tahoma Bold" size="37.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
