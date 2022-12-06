@@ -1,0 +1,148 @@
+package create_PDF;
+
+import java.io.*;
+import java.util.Scanner;
+
+import com.itextpdf.kernel.pdf.*;
+import com.itextpdf.layout.ColumnDocumentRenderer;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.Style;
+import com.itextpdf.layout.element.AreaBreak;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.hyphenation.HyphenationConfig;
+import com.itextpdf.layout.property.AreaBreakType;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+//import com.itextpdf.text.Rectangle;
+import com.itextpdf.kernel.geom.Rectangle;
+
+public class Renderer {
+	
+	public static void main(String[] args) throws FileNotFoundException, IOException {
+		System.out.println("Enter:");
+		Scanner sc=new Scanner(System.in);
+		String name=sc.next();
+		int count=1;
+
+		String path="/Users/charu/Desktop/resume_pdf/";
+	    path=path+name;
+	    // Open PDF document in write mode
+	    PdfWriter pdfWriter = new PdfWriter(path);
+	    PdfDocument pdfDocument = new PdfDocument(pdfWriter);
+	   
+	    Document document = new Document(pdfDocument);
+	
+	    float offSet = 36;
+		float gutter = 23;
+		float columnWidth = (PageSize.A4.getWidth() - offSet * 2) / 2 - gutter;
+		float columnHeight = PageSize.A4.getHeight() - offSet * 2;
+		Rectangle[] columns = {
+		new Rectangle(offSet, offSet, columnWidth, columnHeight-110),
+		new Rectangle(
+		offSet + columnWidth + gutter, offSet, columnWidth, columnHeight)};
+		document.setRenderer(new ColumnDocumentRenderer(document, columns));
+		document.setTextAlignment(TextAlignment.JUSTIFIED).setHyphenation(new HyphenationConfig("en", "uk", 3, 3));
+		
+		/*for background color*/
+		final String background="/Users/charu/Desktop/resume_pdf/gw.png";
+		Image img1 = new Image(ImageDataFactory.create(background), 0, 0, PageSize.A4.getWidth());
+		document.add(img1);
+		/*background*/
+		Paragraph p,p1,p2;
+		p1=new Paragraph();
+		p2=new Paragraph();
+		String line,work="",line2="";
+		AreaBreak nextArea = new AreaBreak(AreaBreakType.NEXT_AREA);
+		
+		final String pic="/Users/charu/Desktop/resume_pdf/pp.jpg";
+		
+		File file=new File("/Users/charu/Desktop/resume_pdf/details2.txt");
+		Image img = new Image(ImageDataFactory.create(pic), offSet, columnHeight-60,100);
+		document.add(img);
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		
+		Style normal = new Style();
+		PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
+		normal.setFont(font).setFontSize(14).setBold();
+		
+		while ((line = br.readLine()) != null) {
+			
+			if(count==1)
+			{
+				Text t=new Text(line).addStyle(normal);
+				p1=new Paragraph().add(t);
+				count=2;
+			}
+			else
+			{
+				p2=new Paragraph().add(line);
+				count=1;
+			}
+			
+			if(count==1 && !line.equals("NIL"))
+			{
+				document.add(p1);
+				document.add(p2);
+			}
+			
+			if(line.equals("WORK EXPERIENCE"))
+			{
+				work=br.readLine();
+				break;
+			}
+//			p = new Paragraph(line);
+			
+	
+			/*if(line.equals("Our primary aim is to convey the ideas that have emerged over the past fifty years of AI"))
+			{
+				document.add(nextArea);
+			}*/
+//			if (line.isEmpty()) {
+//				document.add(nextArea);
+//			 }
+//			document.add(p);
+		}
+		document.add(nextArea);
+		if(!work.equals("NIL"))
+		{
+			Text t=new Text(line).addStyle(normal);
+			p = new Paragraph().add(t);
+			document.add(p);
+			document.add(new Paragraph(work));
+		}
+		
+		while((line = br.readLine()) != null)
+		{
+			
+			if(line.equals("ACHIEVEMENTS") || line.equals("SKILLS") || line.equals("AREAS OF INTEREST")
+					|| line.equals("HOBBIES"))
+			{
+				line2 = br.readLine();
+				if(line2.equals("NIL"))
+					continue;
+				Text t=new Text(line).addStyle(normal);
+				p = new Paragraph().add(t);
+				document.add(p);
+				document.add(new Paragraph(line2));
+			}
+			else
+			{
+				p = new Paragraph(line);
+				document.add(p);
+			}
+		}
+		
+		document.close();
+		sc.close();
+	}
+	
+
+}
